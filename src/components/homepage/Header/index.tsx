@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import * as motion from "framer-motion/client";
+import WeddingCountdown from "@/components/ui/WeddingCountdown";
 
 const Header = () => {
   return (
@@ -16,13 +17,13 @@ const Header = () => {
             initial={{ y: "100px", opacity: 0, rotate: 10 }}
             whileInView={{ y: "0", opacity: 1, rotate: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.2 }}
             className={cn([
               integralCF.className,
               "text-4xl lg:text-[64px] lg:leading-[64px] mb-5 lg:mb-8",
             ])}
           >
-            FIND CLOTHES THAT MATCHES YOUR STYLE
+            Casamento de Matheus e Alessandra
           </motion.h2>
           <motion.p
             initial={{ y: "100px", opacity: 0 }}
@@ -45,7 +46,7 @@ const Header = () => {
               href="/shop"
               className="w-full md:w-52 mb-5 md:mb-12 inline-block text-center bg-black hover:bg-black/80 transition-all text-white px-14 py-4 rounded-full hover:animate-pulse"
             >
-              Shop Now
+              Escolha seu Presente
             </Link>
           </motion.div>
           <motion.div
@@ -53,40 +54,9 @@ const Header = () => {
             whileInView={{ y: "0", opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 1.5, duration: 0.6 }}
-            className="flex md:h-full md:max-h-11 lg:max-h-[52px] xl:max-h-[68px] items-center justify-center md:justify-start flex-wrap sm:flex-nowrap md:space-x-3 lg:space-x-6 xl:space-x-8 md:mb-[116px]"
+            className="mb-12 md:mb-24"
           >
-            <div className="flex flex-col">
-              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2">
-                <AnimatedCounter from={0} to={200} />+
-              </span>
-              <span className="text-xs xl:text-base text-black/60 text-nowrap">
-                International Brands
-              </span>
-            </div>
-            <Separator
-              className="ml-6 md:ml-0 h-12 md:h-full bg-black/10"
-              orientation="vertical"
-            />
-            <div className="flex flex-col ml-6 md:ml-0">
-              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2">
-                <AnimatedCounter from={0} to={2000} />+
-              </span>
-              <span className="text-xs xl:text-base text-black/60 text-nowrap">
-                High-Quality Products
-              </span>
-            </div>
-            <Separator
-              className="hidden sm:block sm:h-12 md:h-full ml-6 md:ml-0 bg-black/10"
-              orientation="vertical"
-            />
-            <div className="flex flex-col w-full text-center sm:w-auto sm:text-left mt-3 sm:mt-0 sm:ml-6 md:ml-0">
-              <span className="font-bold text-2xl md:text-xl lg:text-3xl xl:text-[40px] xl:mb-2">
-                <AnimatedCounter from={0} to={3000} />+
-              </span>
-              <span className="text-xs xl:text-base text-black/60 text-nowrap">
-                Happy Customers
-              </span>
-            </div>
+            <WeddingCountdown />
           </motion.div>
         </section>
         <motion.section

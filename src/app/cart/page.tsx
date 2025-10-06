@@ -13,6 +13,7 @@ import React from "react";
 import { RootState } from "@/lib/store";
 import { useAppSelector } from "@/lib/hooks/redux";
 import Link from "next/link";
+import PixCheckoutModal from "@/components/shop-page/PixCheckoutModal";
 
 export default function CartPage() {
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
@@ -98,13 +99,9 @@ export default function CartPage() {
                     Apply
                   </Button>
                 </div>
-                <Button
-                  type="button"
-                  className="text-sm md:text-base font-medium bg-black rounded-full w-full py-4 h-[54px] md:h-[60px] group"
-                >
-                  Go to Checkout{" "}
-                  <FaArrowRight className="text-xl ml-2 group-hover:translate-x-1 transition-all" />
-                </Button>
+                <div className="relative">
+                  <PixCheckoutModal />
+                </div>
               </div>
             </div>
           </>

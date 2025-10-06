@@ -10,7 +10,7 @@ import {
 import MobileFilters from "@/components/shop-page/filters/MobileFilters";
 import Filters from "@/components/shop-page/filters";
 import { FiSliders } from "react-icons/fi";
-import { newArrivalsData, relatedProductData, topSellingData } from "../page";
+import { newArrivalsData, relatedProductData } from "../page";
 import ProductCard from "@/components/common/ProductCard";
 import {
   Pagination,
@@ -65,7 +65,6 @@ export default function ShopPage() {
               {[
                 ...relatedProductData.slice(1, 4),
                 ...newArrivalsData.slice(1, 4),
-                ...topSellingData.slice(1, 4),
               ].map((product) => (
                 <ProductCard key={product.id} data={product} />
               ))}
