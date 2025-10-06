@@ -101,7 +101,7 @@ export default function TopNavbar() {
                 alt="user"
                 className="max-w-[22px] max-h-[22px]"
               />
-              <span className="absolute bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">
+              <span className="absolute right-3 top-full mt-2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">
                 {user.name}
               </span>
             </div>
