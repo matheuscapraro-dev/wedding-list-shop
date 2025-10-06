@@ -1,9 +1,8 @@
 import ProductListSec from "@/components/common/ProductListSec";
+import HomeClientWrapper from "@/components/HomeClientWrapper";
 import Brands from "@/components/homepage/Brands";
-import DressStyle from "@/components/homepage/DressStyle";
 import Header from "@/components/homepage/Header";
-import Reviews from "@/components/homepage/Reviews";
-import { supabase } from "@/lib/supabase";
+import { getProducts } from "@/lib/products";
 import { Product } from "@/types/product.types";
 import { Review } from "@/types/review.types";
 
@@ -11,49 +10,37 @@ export const newArrivalsData: Product[] = [
   {
     id: 1,
     title: "T-shirt with Tape Details",
-    srcUrl: "/images/pic1.png",
+    src_url: "/images/pic1.png",
     gallery: ["/images/pic1.png", "/images/pic10.png", "/images/pic11.png"],
     price: 120,
-    discount: {
-      amount: 0,
-      percentage: 0,
-    },
+    discount: 0,
     rating: 4.5,
   },
   {
     id: 2,
     title: "Skinny Fit Jeans",
-    srcUrl: "/images/pic2.png",
+    src_url: "/images/pic2.png",
     gallery: ["/images/pic2.png"],
     price: 260,
-    discount: {
-      amount: 0,
-      percentage: 20,
-    },
+    discount: 0,
     rating: 3.5,
   },
   {
     id: 3,
     title: "Chechered Shirt",
-    srcUrl: "/images/pic3.png",
+    src_url: "/images/pic3.png",
     gallery: ["/images/pic3.png"],
     price: 180,
-    discount: {
-      amount: 0,
-      percentage: 0,
-    },
+    discount: 0,
     rating: 4.5,
   },
   {
     id: 4,
     title: "Sleeve Striped T-shirt",
-    srcUrl: "/images/pic4.png",
+    src_url: "/images/pic4.png",
     gallery: ["/images/pic4.png", "/images/pic10.png", "/images/pic11.png"],
     price: 160,
-    discount: {
-      amount: 0,
-      percentage: 30,
-    },
+    discount: 0,
     rating: 4.5,
   },
 ];
@@ -62,49 +49,37 @@ export const relatedProductData: Product[] = [
   {
     id: 12,
     title: "Polo with Contrast Trims",
-    srcUrl: "/images/pic12.png",
+    src_url: "/images/pic12.png",
     gallery: ["/images/pic12.png", "/images/pic10.png", "/images/pic11.png"],
     price: 242,
-    discount: {
-      amount: 0,
-      percentage: 20,
-    },
+    discount: 0,
     rating: 4.0,
   },
   {
     id: 13,
     title: "Gradient Graphic T-shirt",
-    srcUrl: "/images/pic13.png",
+    src_url: "/images/pic13.png",
     gallery: ["/images/pic13.png", "/images/pic10.png", "/images/pic11.png"],
     price: 145,
-    discount: {
-      amount: 0,
-      percentage: 0,
-    },
+    discount: 0,
     rating: 3.5,
   },
   {
     id: 14,
     title: "Polo with Tipping Details",
-    srcUrl: "/images/pic14.png",
+    src_url: "/images/pic14.png",
     gallery: ["/images/pic14.png"],
     price: 180,
-    discount: {
-      amount: 0,
-      percentage: 0,
-    },
+    discount: 0,
     rating: 4.5,
   },
   {
     id: 15,
     title: "Black Striped T-shirt",
-    srcUrl: "/images/pic15.png",
+    src_url: "/images/pic15.png",
     gallery: ["/images/pic15.png"],
     price: 150,
-    discount: {
-      amount: 0,
-      percentage: 30,
-    },
+    discount: 0,
     rating: 5.0,
   },
 ];
@@ -158,29 +133,7 @@ export const reviewsData: Review[] = [
 export const revalidate = 60;
 
 export default async function Home() {
-  const { data: products } = await supabase
-    .from("products")
-    .select("*")
-    .order("id");
+  const products = await getProducts();
 
-  return (
-    <>
-      <Header />
-      <Brands />
-      <main className="my-[50px] sm:my-[72px]">
-        <ProductListSec
-          title="NEW ARRIVALS"
-          data={products}
-          viewAllLink="/shop"
-        />
-        {/* <div className="max-w-frame mx-auto px-4 xl:px-0">
-          <hr className="h-[1px] border-t-black/10 my-10 sm:my-16" />
-        </div> */}
-        {/* <div className="mb-[50px] sm:mb-20">
-          <DressStyle />
-        </div> */}
-        {/* <Reviews data={reviewsData} /> */}
-      </main>
-    </>
-  );
+  return <HomeClientWrapper products={products} />;
 }

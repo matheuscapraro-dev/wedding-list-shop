@@ -1,17 +1,27 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const TopBanner = () => {
+export default function TopBanner() {
+  const [user, setUser] = useState<{ name: string } | null>(null);
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("user");
+    if (saved) setUser(JSON.parse(saved));
+  }, []);
+
+  if (!show) return null; // permite fechar o banner
+
   return (
     <div className="bg-black text-white text-center py-2 px-2 sm:px-4 xl:px-0">
       <div className="relative max-w-frame mx-auto">
         <p className="text-xs sm:text-sm">
-          Sign up and get 20% off to your first order.{" "}
-          <Link href="#" className="underline font-medium">
-            Sign Up Now
-          </Link>
+          {user
+            ? `Bem-vindo(a), ${user.name}! Escolha um presente para o casamento de Matheus & Alessandra.`
+            : "Bem-vindo(a)! Faça login para ver os presentes disponíveis."}
         </p>
         <Button
           variant="ghost"
@@ -19,6 +29,7 @@ const TopBanner = () => {
           size="icon"
           type="button"
           aria-label="close banner"
+          onClick={() => setShow(false)}
         >
           <Image
             priority
@@ -31,6 +42,4 @@ const TopBanner = () => {
       </div>
     </div>
   );
-};
-
-export default TopBanner;
+}

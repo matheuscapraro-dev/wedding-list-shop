@@ -12,48 +12,19 @@ import LayoutSpacing from "./LayoutSpacing";
 const socialsData: SocialNetworks[] = [
   {
     id: 1,
-    icon: <FaTwitter />,
-    url: "https://twitter.com",
-  },
-  {
-    id: 2,
-    icon: <FaFacebookF />,
-    url: "https://facebook.com",
-  },
-  {
-    id: 3,
     icon: <FaInstagram />,
+    name: "Noiva",
     url: "https://instagram.com",
   },
   {
-    id: 4,
-    icon: <FaGithub />,
-    url: "https://github.com/mohammadoftadeh",
+    id: 2,
+    icon: <FaInstagram />,
+    name: "Noivo",
+    url: "https://instagram.com",
   },
 ];
 
-const paymentBadgesData: PaymentBadge[] = [
-  {
-    id: 1,
-    srcUrl: "/icons/Visa.svg",
-  },
-  {
-    id: 2,
-    srcUrl: "/icons/mastercard.svg",
-  },
-  {
-    id: 3,
-    srcUrl: "/icons/paypal.svg",
-  },
-  {
-    id: 4,
-    srcUrl: "/icons/applePay.svg",
-  },
-  {
-    id: 5,
-    srcUrl: "/icons/googlePay.svg",
-  },
-];
+const paymentBadgesData: PaymentBadge[] = [];
 
 const Footer = () => {
   return (
@@ -77,27 +48,27 @@ const Footer = () => {
                 KESSLER.CAPRARO
               </h1>
               <p className="text-black/60 text-sm mb-9">
-                We have clothes that suits your style and which you’re proud to
-                wear. From women to men.
+                Casmento da familia patatoin
               </p>
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
                 {socialsData.map((social) => (
-                  <Link
-                    href={social.url}
-                    key={social.id}
-                    className="bg-white hover:bg-black hover:text-white transition-all mr-3 w-7 h-7 rounded-full border border-black/20 flex items-center justify-center p-1.5"
-                  >
-                    {social.icon}
+                  <Link href={social.url} key={social.id}>
+                    <div className="flex items-center" key={social.id}>
+                      <div className="bg-white hover:bg-black hover:text-white transition-all mr-1 w-7 h-7 rounded-full border border-black/20 flex items-center justify-center p-1.5">
+                        {social.icon}
+                      </div>
+                      {social.name}
+                    </div>
                   </Link>
                 ))}
               </div>
             </div>
-            <div className="hidden lg:grid col-span-9 lg:grid-cols-4 lg:pl-10">
+            {/* <div className="hidden lg:grid col-span-9 lg:grid-cols-4 lg:pl-10">
               <LinksSection />
             </div>
             <div className="grid lg:hidden grid-cols-2 sm:grid-cols-4">
               <LinksSection />
-            </div>
+            </div> */}
           </nav>
 
           <hr className="h-[1px] border-t-black/10 mb-6" />
@@ -122,7 +93,7 @@ const Footer = () => {
                 >
                   <Image
                     priority
-                    src={badge.srcUrl}
+                    src={badge.src_url}
                     width={33}
                     height={100}
                     alt="user"

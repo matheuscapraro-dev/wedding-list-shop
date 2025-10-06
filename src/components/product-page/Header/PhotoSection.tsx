@@ -5,8 +5,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 const PhotoSection = ({ data }: { data: Product }) => {
-  const [selected, setSelected] = useState<string>(data.srcUrl);
-
+  const [selected, setSelected] = useState<string>(data.src_url);
+  data.gallery = [data.src_url];
   return (
     <div className="flex flex-col-reverse lg:flex-row lg:space-x-3.5">
       {data?.gallery && data.gallery.length > 0 && (

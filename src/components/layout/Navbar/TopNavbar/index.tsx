@@ -1,16 +1,11 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavMenu } from "../navbar.types";
-import { MenuList } from "./MenuList";
-import {
-  NavigationMenu,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-import { MenuItem } from "./MenuItem";
 import Image from "next/image";
-import InputGroup from "@/components/ui/input-group";
 import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
 
@@ -69,10 +64,17 @@ const data: NavMenu = [
   },
 ];
 
-const TopNavbar = () => {
+export default function TopNavbar() {
+  const [user, setUser] = useState<{ name: string } | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("user");
+    if (saved) setUser(JSON.parse(saved));
+  }, []);
+
   return (
     <nav className="sticky top-0 bg-white z-20">
-      <div className="flex relative max-w-frame mx-auto items-center justify-between md:justify-start py-5 md:py-6 px-4 xl:px-0">
+      <div className="flex relative max-w-frame mx-auto items-center justify-between py-5 md:py-6 px-4 xl:px-0">
         <div className="flex items-center">
           <div className="block md:hidden mr-4">
             <ResTopNavbar data={data} />
@@ -89,20 +91,34 @@ const TopNavbar = () => {
         </div>
         <div className="flex items-center">
           <CartBtn />
-          <Link href="/#signin" className="p-1">
-            <Image
-              priority
-              src="/icons/user.svg"
-              height={100}
-              width={100}
-              alt="user"
-              className="max-w-[22px] max-h-[22px]"
-            />
-          </Link>
+          {user ? (
+            <div className="relative group cursor-default">
+              <Image
+                priority
+                src="/icons/user.svg"
+                height={100}
+                width={100}
+                alt="user"
+                className="max-w-[22px] max-h-[22px]"
+              />
+              <span className="absolute bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">
+                {user.name}
+              </span>
+            </div>
+          ) : (
+            <Link href="/#signin" className="p-1">
+              <Image
+                priority
+                src="/icons/user.svg"
+                height={100}
+                width={100}
+                alt="user"
+                className="max-w-[22px] max-h-[22px]"
+              />
+            </Link>
+          )}
         </div>
       </div>
     </nav>
   );
-};
-
-export default TopNavbar;
+}

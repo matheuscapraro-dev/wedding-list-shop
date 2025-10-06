@@ -3,6 +3,7 @@ import React from "react";
 export type SocialNetworks = {
   id: number;
   icon: React.ReactNode;
+  name: string;
   url: string;
 };
 
@@ -20,5 +21,5 @@ export type FooterLinks = {
 
 export type PaymentBadge = {
   id: number;
-  srcUrl: string;
+  src_url: string;
 };

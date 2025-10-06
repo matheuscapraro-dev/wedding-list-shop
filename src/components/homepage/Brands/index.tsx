@@ -1,26 +1,26 @@
 import Image from "next/image";
 import React from "react";
 
-const brandsData: { id: string; srcUrl: string }[] = [
+const brandsData: { id: string; src_url: string }[] = [
   {
     id: "versace",
-    srcUrl: "/icons/versace-logo.svg",
+    src_url: "/icons/versace-logo.svg",
   },
   {
     id: "zara",
-    srcUrl: "/icons/zara-logo.svg",
+    src_url: "/icons/zara-logo.svg",
   },
   {
     id: "gucci",
-    srcUrl: "/icons/gucci-logo.svg",
+    src_url: "/icons/gucci-logo.svg",
   },
   {
     id: "prada",
-    srcUrl: "/icons/prada-logo.svg",
+    src_url: "/icons/prada-logo.svg",
   },
   {
     id: "calvin-klein",
-    srcUrl: "/icons/calvin-klein-logo.svg",
+    src_url: "/icons/calvin-klein-logo.svg",
   },
 ];
 
@@ -32,7 +32,7 @@ const Brands = () => {
           <Image
             key={brand.id}
             priority
-            src={brand.srcUrl}
+            src={brand.src_url}
             height={0}
             width={0}
             alt={brand.id}
