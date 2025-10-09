@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,21 +12,32 @@ import {
 } from "@/components/ui/dialog";
 import { Copy, Check } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
+import { QrCodePix } from "qrcode-pix";
 
-export default function PixCheckoutModal() {
-  const [pixKey, setPixKey] = useState("");
+interface PixCheckoutModalProps {
+  totalAmount: number;
+}
+
+export default function PixCheckoutModal({
+  totalAmount,
+}: PixCheckoutModalProps) {
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    // gera uma chave PIX aleatória simulada
-    const randomKey = `pix-${Math.random()
-      .toString(36)
-      .substring(2, 12)}@email.com`;
-    setPixKey(randomKey);
-  }, []);
+  const pixPayload = useMemo(() => {
+    const qrCode = QrCodePix({
+      version: "01",
+      key: "08402937985",
+      name: "Matheus Abrahao Caprarop",
+      city: "Curitiba",
+      transactionId: `TXID${Date.now()}${(Math.random() * 1000).toFixed(0)}`,
+      value: totalAmount,
+    });
+
+    return qrCode.payload();
+  }, [totalAmount]);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(pixKey);
+    await navigator.clipboard.writeText(pixPayload);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -47,15 +58,19 @@ export default function PixCheckoutModal() {
           <DialogTitle className="text-2xl font-bold">
             Pagamento via PIX
           </DialogTitle>
+
           <DialogDescription>
             Escaneie o QR Code ou copie o código abaixo para pagar.
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col items-center gap-4 py-4">
-          <QRCodeSVG value={pixKey} size={180} />
-          <div className="w-full bg-muted rounded-lg p-3 text-sm font-mono break-all text-center">
-            {pixKey}
+          <QRCodeSVG value={pixPayload} size={180} />
+
+          <div className="w-full bg-muted rounded-lg p-3 text-xs font-mono break-all text-center">
+            <div className="text-3xl font-bold my-2 text-black">
+              R$ {totalAmount.toFixed(2).replace(".", ",")}
+            </div>
           </div>
 
           <Button
@@ -71,7 +86,7 @@ export default function PixCheckoutModal() {
               await fetch("/api/send-email", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ pixKey }),
+                body: JSON.stringify({ pixPayload, totalAmount }),
               });
               alert("E-mail enviado com sucesso!");
             }}

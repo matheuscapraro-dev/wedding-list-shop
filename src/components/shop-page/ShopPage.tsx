@@ -43,7 +43,7 @@ export default function ShopPage({ products }: ShopPageProps) {
                 <li key={item.id} className="flex justify-between">
                   <span>{item.title}</span>
                   <span>
-                    $
+                    R$
                     {item.discount > 0
                       ? item.price - (item.price * item.discount) / 100
                       : item.price}

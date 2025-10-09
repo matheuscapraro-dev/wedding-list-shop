@@ -1,3 +1,5 @@
+// src/app/layout.tsx (Corrigido)
+
 import type { Metadata, Viewport } from "next";
 import "../styles/globals.css";
 import { satoshi } from "@/styles/fonts";
@@ -25,12 +27,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={satoshi.className}>
         <HolyLoader color="#868686" />
-        <TopBanner />
         <Providers>
-          <TopNavbar />
-          {children}
+          <TopBanner />
+          <div className="mx-2 md:mx-4">
+            <TopNavbar />
+            {children}
+            <Footer />
+          </div>
         </Providers>
-        <Footer />
       </body>
     </html>
   );

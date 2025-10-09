@@ -1,28 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const brandsData: { id: string; src_url: string }[] = [
-  {
-    id: "versace",
-    src_url: "/icons/versace-logo.svg",
-  },
-  {
-    id: "zara",
-    src_url: "/icons/zara-logo.svg",
-  },
-  {
-    id: "gucci",
-    src_url: "/icons/gucci-logo.svg",
-  },
-  {
-    id: "prada",
-    src_url: "/icons/prada-logo.svg",
-  },
-  {
-    id: "calvin-klein",
-    src_url: "/icons/calvin-klein-logo.svg",
-  },
-];
+const brandsData: { id: string; src_url: string }[] = [];
 
 const Brands = () => {
   return (

@@ -6,4 +6,5 @@ export type Product = {
   price: number;
   discount: number;
   rating: number;
+  available: boolean;
 };

@@ -1,12 +1,12 @@
-// src/components/HomeClientWrapper.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense } from "react"; // 1. Importar o Suspense
+import { useAppSelector } from "@/lib/hooks/redux";
 import CodeLogin from "@/components/CodeLogin";
-import ProductListSec from "./common/ProductListSec";
 import Brands from "./homepage/Brands";
 import Header from "./homepage/Header";
 import { Product } from "@/types/product.types";
+import SpinnerbLoader from "@/components/ui/SpinnerbLoader";
 
 interface HomeClientWrapperProps {
   products: Product[];
@@ -15,26 +15,26 @@ interface HomeClientWrapperProps {
 export default function HomeClientWrapper({
   products,
 }: HomeClientWrapperProps) {
-  const [user, setUser] = useState<any>(null);
+  const { user } = useAppSelector((state) => state.user);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("user");
-    if (saved) setUser(JSON.parse(saved));
-  }, []);
-
-  useEffect(() => {
-    if (user) localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
-
-  if (!user) return <CodeLogin onLogin={setUser} />;
+  if (!user) {
+    return (
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center h-96">
+            <SpinnerbLoader className="w-10 border-2 border-gray-300 border-r-gray-600" />
+          </div>
+        }
+      >
+        <CodeLogin />
+      </Suspense>
+    );
+  }
 
   return (
     <>
       <Header />
       <Brands />
-      <main className="my-[50px] sm:my-[72px]">
-        <ProductListSec title="Presentes" data={products} viewAllLink="/shop" />
-      </main>
     </>
   );
 }

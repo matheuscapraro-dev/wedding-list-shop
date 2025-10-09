@@ -1,19 +1,21 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
-import storage from "@/components/storage";
+import storage from "@/components/storage"; // Assumindo que este é seu storage customizado
 import productsReducer from "./features/products/productsSlice";
 import cartsReducer from "./features/carts/cartsSlice";
+import userReducer from "./features/user/userSlice"; // 1. Importe o novo userReducer
 
 const persistConfig = {
   key: "root",
   storage,
   version: 1,
-  whitelist: ["carts"],
+  whitelist: ["carts", "user"], // 2. Adicione 'user' à whitelist para persistência
 };
 
 const rootReducer = combineReducers({
   products: productsReducer,
   carts: cartsReducer,
+  user: userReducer, // 3. Adicione o userReducer ao rootReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -32,11 +34,10 @@ export const makeStore = () => {
   return { store, persistor };
 };
 
+// As exportações de tipos permanecem as mesmas e funcionarão corretamente
 const store = makeStore().store;
 
-// Infer the type of the store
 export type AppStore = typeof store;
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

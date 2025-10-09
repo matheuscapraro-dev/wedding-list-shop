@@ -53,7 +53,6 @@ const ProductCard = ({ data }: ProductCardProps) => {
                 remove({
                   id: data.id,
                   attributes: data.attributes,
-                  quantity: data.quantity,
                 })
               )
             }
@@ -61,34 +60,22 @@ const ProductCard = ({ data }: ProductCardProps) => {
             <PiTrashFill className="text-xl md:text-2xl text-red-600" />
           </Button>
         </div>
-        <div className="-mt-1">
-          <span className="text-black text-xs md:text-sm mr-1">Size:</span>
-          <span className="text-black/60 text-xs md:text-sm">
-            {data.attributes[0]}
-          </span>
-        </div>
-        <div className="mb-auto -mt-1.5">
-          <span className="text-black text-xs md:text-sm mr-1">Color:</span>
-          <span className="text-black/60 text-xs md:text-sm">
-            {data.attributes[1]}
-          </span>
-        </div>
-        <div className="flex items-center flex-wrap justify-between">
+        <div className="flex items-center flex-wrap justify-between mt-2">
           <div className="flex items-center space-x-[5px] xl:space-x-2.5">
             {data.discount > 0 ? (
               <span className="font-bold text-black text-xl xl:text-2xl">
-                {`$${Math.round(
+                {`R$${Math.round(
                   data.price - (data.price * data.discount) / 100
                 )}`}
               </span>
             ) : (
               <span className="font-bold text-black text-xl xl:text-2xl">
-                ${data.price}
+                R${data.price}
               </span>
             )}
             {data.discount > 0 && (
               <span className="font-bold text-black/40 line-through text-xl xl:text-2xl">
-                ${data.price}
+                R${data.price}
               </span>
             )}
             {data.discount > 0 && (
@@ -106,7 +93,6 @@ const ProductCard = ({ data }: ProductCardProps) => {
                     remove({
                       id: data.id,
                       attributes: data.attributes,
-                      quantity: data.quantity,
                     })
                   )
                 : dispatch(
@@ -114,7 +100,7 @@ const ProductCard = ({ data }: ProductCardProps) => {
                   )
             }
             isZeroDelete
-            className="px-5 py-3 max-h-8 md:max-h-10 min-w-[105px] max-w-[105px] sm:max-w-32"
+            className="px-5 py-3 max-h-8 md:max-h-10 min-w-[105px] max-w-[105px] sm:max-w-32 mt-2"
           />
         </div>
       </div>

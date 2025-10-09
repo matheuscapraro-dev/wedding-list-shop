@@ -17,25 +17,33 @@ type ShopPageClientProps = {
   products: Product[];
 };
 
+// É uma boa prática mover funções puras para fora do componente
+// para que não sejam recriadas a cada renderização.
+const shuffleArray = (arr: Product[]) => {
+  return [...arr].sort(() => Math.random() - 0.5);
+};
+
 export default function ShopPageClient({
   products: initialProducts,
 }: ShopPageClientProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [sort, setSort] = useState("random");
 
-  const shuffleArray = (arr: Product[]) => {
-    return [...arr].sort(() => Math.random() - 0.5);
-  };
-
   useEffect(() => {
-    let sorted = [...initialProducts];
+    const availableProducts = initialProducts.filter((p) => p.available);
+    const unavailableProducts = initialProducts.filter((p) => !p.available);
 
-    if (sort === "low-price") sorted = sorted.sort((a, b) => a.price - b.price);
-    else if (sort === "high-price")
-      sorted = sorted.sort((a, b) => b.price - a.price);
-    else if (sort === "random") sorted = shuffleArray(initialProducts);
+    let sortedAvailable = [...availableProducts];
 
-    setProducts(sorted);
+    if (sort === "low-price") {
+      sortedAvailable.sort((a, b) => a.price - b.price);
+    } else if (sort === "high-price") {
+      sortedAvailable.sort((a, b) => b.price - a.price);
+    } else if (sort === "random") {
+      sortedAvailable = shuffleArray(availableProducts);
+    }
+
+    setProducts([...sortedAvailable, ...unavailableProducts]);
   }, [sort, initialProducts]);
 
   return (
@@ -44,13 +52,6 @@ export default function ShopPageClient({
         <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
         <BreadcrumbShop />
         <div className="flex md:space-x-5 items-start">
-          <div className="hidden md:block min-w-[295px] max-w-[295px] border border-black/10 rounded-[20px] px-5 md:px-6 py-5 space-y-5 md:space-y-6">
-            <div className="flex items-center justify-between">
-              <span className="font-bold text-black text-xl">Filters</span>
-              <FiSliders className="text-2xl text-black/40" />
-            </div>
-          </div>
-
           <div className="flex flex-col w-full space-y-5">
             <div className="flex flex-col lg:flex-row lg:justify-between">
               <div className="flex items-center justify-between">
@@ -59,11 +60,11 @@ export default function ShopPageClient({
 
               <div className="flex flex-col sm:items-center sm:flex-row">
                 <span className="text-sm md:text-base text-black/60 mr-3">
-                  Showing {products.length} Products
+                  Mostrando {products.length} Produtos
                 </span>
 
                 <div className="flex items-center">
-                  Sort by:{" "}
+                  Ordenar por:{" "}
                   <Select value={sort} onValueChange={(v) => setSort(v)}>
                     <SelectTrigger className="ml-2 w-36 sm:w-44 h-10 px-1 text-sm sm:text-base font-medium text-black border-0 shadow-none focus:outline-none focus:ring-0">
                       <SelectValue placeholder="Sort by" />

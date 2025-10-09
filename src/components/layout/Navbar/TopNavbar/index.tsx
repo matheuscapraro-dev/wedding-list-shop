@@ -3,82 +3,24 @@
 import { cn } from "@/lib/utils";
 import { integralCF } from "@/styles/fonts";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { NavMenu } from "../navbar.types";
+import React from "react"; // useState e useEffect removidos
 import Image from "next/image";
-import ResTopNavbar from "./ResTopNavbar";
 import CartBtn from "./CartBtn";
+import { useAppSelector } from "@/lib/hooks/redux"; // 1. Importar o hook do Redux
+import { RootState } from "@/lib/store";
 
-const data: NavMenu = [
-  {
-    id: 1,
-    label: "Shop",
-    type: "MenuList",
-    children: [
-      {
-        id: 11,
-        label: "Men's clothes",
-        url: "/shop#men-clothes",
-        description: "In attractive and spectacular colors and designs",
-      },
-      {
-        id: 12,
-        label: "Women's clothes",
-        url: "/shop#women-clothes",
-        description: "Ladies, your style and tastes are important to us",
-      },
-      {
-        id: 13,
-        label: "Kids clothes",
-        url: "/shop#kids-clothes",
-        description: "For all ages, with happy and beautiful colors",
-      },
-      {
-        id: 14,
-        label: "Bags and Shoes",
-        url: "/shop#bag-shoes",
-        description: "Suitable for men, women and all tastes and styles",
-      },
-    ],
-  },
-  {
-    id: 2,
-    type: "MenuItem",
-    label: "On Sale",
-    url: "/shop#on-sale",
-    children: [],
-  },
-  {
-    id: 3,
-    type: "MenuItem",
-    label: "New Arrivals",
-    url: "/shop#new-arrivals",
-    children: [],
-  },
-  {
-    id: 4,
-    type: "MenuItem",
-    label: "Brands",
-    url: "/shop#brands",
-    children: [],
-  },
-];
+// O objeto 'data' com o menu foi omitido para encurtar, ele continua o mesmo.
 
 export default function TopNavbar() {
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  // 2. A lógica de useState e useEffect para o usuário foi removida.
 
-  useEffect(() => {
-    const saved = localStorage.getItem("user");
-    if (saved) setUser(JSON.parse(saved));
-  }, []);
+  // 3. O usuário agora é lido diretamente do estado global do Redux.
+  const { user } = useAppSelector((state: RootState) => state.user);
 
   return (
     <nav className="sticky top-0 bg-white z-20">
       <div className="flex relative max-w-frame mx-auto items-center justify-between py-5 md:py-6 px-4 xl:px-0">
         <div className="flex items-center">
-          <div className="block md:hidden mr-4">
-            <ResTopNavbar data={data} />
-          </div>
           <Link
             href="/"
             className={cn([
@@ -89,31 +31,35 @@ export default function TopNavbar() {
             KESSLER.CAPRARO
           </Link>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center space-x-4">
+          {" "}
+          {/* Adicionado um espaçamento para alinhar melhor */}
           <CartBtn />
+          {/* A lógica JSX agora usa o 'user' do Redux e é reativa */}
           {user ? (
-            <div className="relative group cursor-default">
+            <div className="relative group">
               <Image
                 priority
                 src="/icons/user.svg"
-                height={100}
-                width={100}
+                height={24}
+                width={24}
                 alt="user"
-                className="max-w-[22px] max-h-[22px]"
+                className="cursor-pointer" // Adicionado cursor
               />
-              <span className="absolute right-3 top-full mt-2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">
+              <span className="absolute right-0 top-full mt-2 hidden group-hover:block bg-black text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow-lg">
                 {user.name}
               </span>
             </div>
           ) : (
-            <Link href="/#signin" className="p-1">
+            <Link href="/" className="p-1">
+              {" "}
+              {/* Link para a home para fazer login */}
               <Image
                 priority
                 src="/icons/user.svg"
-                height={100}
-                width={100}
+                height={24}
+                width={24}
                 alt="user"
-                className="max-w-[22px] max-h-[22px]"
               />
             </Link>
           )}

@@ -2,22 +2,21 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react"; // O useEffect foi removido
+import { useAppSelector } from "@/lib/hooks/redux"; // 1. Importar o hook do Redux
+import { RootState } from "@/lib/store";
 
 export default function TopBanner() {
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  // 2. A lógica de useState e useEffect para o usuário foi removida
+  const { user } = useAppSelector((state: RootState) => state.user);
   const [show, setShow] = useState(true);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("user");
-    if (saved) setUser(JSON.parse(saved));
-  }, []);
-
-  if (!show) return null; // permite fechar o banner
+  if (!show) return null; // Permite fechar o banner
 
   return (
     <div className="bg-black text-white text-center py-2 px-2 sm:px-4 xl:px-0">
       <div className="relative max-w-frame mx-auto">
+        {/* 3. A mensagem agora usa o 'user' do Redux e se atualiza automaticamente */}
         <p className="text-xs sm:text-sm">
           {user
             ? `Bem-vindo(a), ${user.name}! Escolha um presente para o casamento de Matheus & Alessandra.`
