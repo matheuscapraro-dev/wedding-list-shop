@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+// 1. Imported 'useCallback' instead of the unused 'useMemo'
+import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
 interface TimeUnitProps {
@@ -31,10 +32,16 @@ const TimeUnit: React.FC<TimeUnitProps> = ({ value, label }) => (
   </motion.div>
 );
 
-const WeddingCountdown: React.FC = () => {
-  const weddingDate = useMemo(() => new Date("2025-12-21T15:00:00"), []);
+// 2. Defined a props interface for the component
+interface WeddingCountdownProps {
+  weddingDate: Date;
+}
 
-  const calculateTimeLeft = (): TimeLeft | null => {
+// 3. Used the interface and destructured the 'weddingDate' prop correctly
+const WeddingCountdown: React.FC<WeddingCountdownProps> = ({ weddingDate }) => {
+  // 4. Wrapped 'calculateTimeLeft' in 'useCallback'
+  // This memoizes the function, ensuring it only changes if 'weddingDate' changes.
+  const calculateTimeLeft = useCallback((): TimeLeft | null => {
     const now = new Date().getTime();
     const difference = weddingDate.getTime() - now;
     if (difference <= 0) return null;
@@ -45,16 +52,24 @@ const WeddingCountdown: React.FC = () => {
       minutos: Math.floor((difference / 1000 / 60) % 60),
       segundos: Math.floor((difference / 1000) % 60),
     };
-  };
+  }, [weddingDate]); // Dependency is 'weddingDate'
 
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(calculateTimeLeft);
+  // 5. Used lazy initialization for 'useState'
+  // This ensures 'calculateTimeLeft' is only called on the initial render.
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(() =>
+    calculateTimeLeft()
+  );
 
   useEffect(() => {
+    // Set the time immediately in case the prop changed
+    setTimeLeft(calculateTimeLeft());
+
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
+
     return () => clearInterval(timer);
-  }, []);
+  }, [calculateTimeLeft]); // 6. Added 'calculateTimeLeft' to the dependency array
 
   if (!timeLeft) {
     return (
@@ -64,7 +79,7 @@ const WeddingCountdown: React.FC = () => {
         animate={{ opacity: 1 }}
       >
         <h3 className="font-extrabold text-3xl md:text-5xl text-primary drop-shadow-sm">
-          💍 É hoje o grande dia!
+          💍 É hoje!
         </h3>
       </motion.div>
     );

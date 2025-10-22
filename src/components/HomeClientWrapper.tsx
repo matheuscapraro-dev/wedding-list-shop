@@ -1,20 +1,13 @@
 "use client";
 
-import { Suspense } from "react"; // 1. Importar o Suspense
+import { Suspense } from "react";
 import { useAppSelector } from "@/lib/hooks/redux";
 import CodeLogin from "@/components/CodeLogin";
-import Brands from "./homepage/Brands";
+import CeremonyInfo from "./homepage/Brands";
 import Header from "./homepage/Header";
-import { Product } from "@/types/product.types";
 import SpinnerbLoader from "@/components/ui/SpinnerbLoader";
 
-interface HomeClientWrapperProps {
-  products: Product[];
-}
-
-export default function HomeClientWrapper({
-  products,
-}: HomeClientWrapperProps) {
+export default function HomeClientWrapper() {
   const { user } = useAppSelector((state) => state.user);
 
   if (!user) {
@@ -33,8 +26,8 @@ export default function HomeClientWrapper({
 
   return (
     <>
-      <Header />
-      <Brands />
+      <Header user={user} />
+      <CeremonyInfo user={user} />
     </>
   );
 }

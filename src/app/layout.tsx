@@ -29,11 +29,11 @@ export default function RootLayout({
         <HolyLoader color="#868686" />
         <Providers>
           <TopBanner />
-          <div className="mx-2 md:mx-4">
+          <div className="">
             <TopNavbar />
             {children}
-            <Footer />
           </div>
+          <Footer />
         </Providers>
       </body>
     </html>

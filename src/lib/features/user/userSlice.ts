@@ -2,10 +2,11 @@
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type User = {
+export type User = {
   id: number;
   name: string;
   confirmed: boolean;
+  group: number;
 };
 
 interface UserState {
