@@ -12,6 +12,7 @@ type User = {
   id: number;
   name: string;
   confirmed: boolean;
+  group: number;
 };
 
 type NewsLetterSectionProps = {
