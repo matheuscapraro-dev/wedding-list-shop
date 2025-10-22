@@ -24,7 +24,7 @@ const Footer = () => {
       {user && (
         <div className="relative">
           <div className="absolute bottom-0 w-full h-1/2 bg-[#F0F0F0]"></div>
-          <div className="px-4">
+          <div className="px-4 mx-4">
             {/* 3. Passa o objeto 'user' para o componente filho */}
             <NewsLetterSection user={user} />
           </div>

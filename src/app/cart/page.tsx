@@ -10,7 +10,6 @@ import React from "react";
 import { RootState } from "@/lib/store";
 import { useAppSelector } from "@/lib/hooks/redux";
 import Link from "next/link";
-import PixCheckoutModal from "@/components/shop-page/PixCheckoutModal";
 
 export default function CartPage() {
   const { cart, totalPrice, adjustedTotalPrice } = useAppSelector(
@@ -64,7 +63,9 @@ export default function CartPage() {
                     asChild
                     className="text-sm md:text-base font-medium bg-black rounded-full w-full py-4 h-[54px] md:h-[60px] group"
                   >
-                    <Link href="/checkout">Comprar</Link>
+                    <Link href="/checkout" scroll={true}>
+                      Comprar
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -75,7 +76,9 @@ export default function CartPage() {
             <TbBasketExclamation strokeWidth={1} className="text-6xl" />
             <span className="block mb-4">seu carrinho esta vazio</span>
             <Button className="rounded-full w-24" asChild>
-              <Link href="/shop">Escolha</Link>
+              <Link href="/shop" scroll={true}>
+                Escolha
+              </Link>
             </Button>
           </div>
         )}

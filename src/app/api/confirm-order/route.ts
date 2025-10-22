@@ -15,15 +15,15 @@ export async function POST(req: Request) {
     }
 
     // Atualiza a coluna 'available' para 'false' para todos os produtos no array
-    const { error } = await supabase
-      .from("products")
-      .update({ available: false })
-      .in("id", productIds); // .in() é perfeito para corresponder a múltiplos valores
+    // const { error } = await supabase
+    //   .from("products")
+    //   .update({ available: false })
+    //   .in("id", productIds); // .in() é perfeito para corresponder a múltiplos valores
 
-    if (error) {
-      console.error("Erro no Supabase ao atualizar produtos:", error);
-      throw error; // Lança o erro para ser pego pelo catch
-    }
+    // if (error) {
+    //   console.error("Erro no Supabase ao atualizar produtos:", error);
+    //   throw error; // Lança o erro para ser pego pelo catch
+    // }
 
     return NextResponse.json({
       success: true,

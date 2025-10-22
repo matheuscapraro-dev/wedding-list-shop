@@ -19,7 +19,7 @@ export default function TopNavbar() {
 
   return (
     <nav className="sticky top-0 bg-white z-20">
-      <div className="flex relative max-w-frame mx-auto items-center justify-between py-5 md:py-6 px-4 xl:px-0">
+      <div className="flex relative max-w-frame mx-auto items-center justify-between py-5 md:py-6 px-12 xl:px-0">
         <div className="flex items-center">
           <Link
             href="/"

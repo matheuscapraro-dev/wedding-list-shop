@@ -2,18 +2,17 @@
 
 "use client";
 
-import { useState, useEffect } from "react"; // 1. Importar useEffect
-import { useSearchParams, useRouter } from "next/navigation"; // 2. Importar hooks do Next.js
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks/redux";
 import { setUser } from "@/lib/features/user/userSlice";
 
 export default function CodeLogin() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Estado de carregamento para UX
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
 
-  // Hooks do Next.js para ler a URL e manipular a rota
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -46,17 +45,14 @@ export default function CodeLogin() {
     }
   };
 
-  // 3. Efeito que roda UMA VEZ quando o componente é montado
   useEffect(() => {
     const codeFromUrl = searchParams.get("code");
     if (codeFromUrl) {
-      // Se encontramos um código na URL, tentamos fazer o login automaticamente
-      setCode(codeFromUrl.toUpperCase()); // Preenche o input visualmente
-      handleLogin(codeFromUrl.toUpperCase()); // Chama a função de login
+      setCode(codeFromUrl.toUpperCase());
+      handleLogin(codeFromUrl.toUpperCase());
     }
-  }, [searchParams]); // Dependência para garantir que rode se os params mudarem
+  }, [searchParams]);
 
-  // Se estiver tentando logar via URL, mostra um indicador de carregamento
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center p-4 min-h-[200px]">
@@ -82,7 +78,6 @@ export default function CodeLogin() {
         className="border rounded px-3 py-2 text-center"
       />
       <button
-        // A função de clique agora passa o código do estado local
         onClick={() => handleLogin(code)}
         className="bg-black text-white rounded py-2 hover:bg-gray-800 transition-colors"
       >

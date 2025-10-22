@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import BreadcrumbShop from "@/components/shop-page/BreadcrumbShop";
 import ProductCard from "@/components/common/ProductCard";
-import { getProducts } from "@/lib/products";
 import { Product } from "@/types/product.types";
 
 interface ShopPageProps {
