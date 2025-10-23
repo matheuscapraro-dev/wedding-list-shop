@@ -19,10 +19,10 @@ const Header = ({ user }: { user: User }) => {
       var weddingDate = new Date("2026-01-09T15:00:00");
       break;
     case 3:
-      var weddingDate = new Date("2024-09-11T15:00:00");
+      var weddingDate = new Date("2025-01-11T15:00:00");
       break;
     case 4:
-      var weddingDate = new Date("2024-09-17T15:00:00");
+      var weddingDate = new Date("2025-01-17T15:00:00");
       break;
     default:
       var weddingDate = new Date("2025-12-21T15:00:00");
